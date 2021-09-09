@@ -1,0 +1,61 @@
+# Windows_AD_generic
+initial_admin_password: "BadPassword123!"
+initial_domain_admin_password: "BadPassword123!"
+
+domain_admin_user: "Administrator@mydomain.local"
+domain_admin_password: "BadPassword123!"
+DC_address: 10.1.1.1
+DC_hostname: "DC"
+
+# Windows_AD_setup_vars
+dc_domain_name: "mydomain.local"
+domain_netbios_name: "mydomain" 
+safe_mode_password: "BadPassword123!"
+
+# Windows_AD_User - Admin User 
+backup_username: "BAdmin"
+backup_user_password: "BadPassword123!"
+
+
+# windows_dns_client
+secondary_dns_server: 1.1.1.1
+
+
+# windows_dns_record 
+forward_zone_name: "mydomain.local"
+reverse_zone_network: "10.1.1.0/24"
+reverse_zone_name: "1.0.10.in-addr.arpa"
+
+# A records
+# You can add as much as needed
+Records_FWD:
+    ESXI: 
+      IP: 10.1.1.10
+      name: esxi
+    vCenter: 
+      IP: 10.1.1.20
+      name: vcenter
+    pfsense: 
+      IP: 10.1.1.254 
+      name: pf 
+
+# PTR Records
+# You can add as much as needed
+Records_PTR:
+    ESXI: 
+      IP_Prefix: 10
+      name: esxi
+    vCenter: 
+      IP_Prefix: 20
+      name: vcenter
+    pfsense: 
+      IP_Prefix: 254 
+      name: pf 
+
+#DC_Utilities list of packages to install on the DC
+# you can add as much as needed 
+list_of_packages:
+  - googlechrome
+  - firefox
+  - git
+  - notepadplusplus
