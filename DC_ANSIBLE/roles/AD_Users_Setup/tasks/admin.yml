@@ -1,7 +1,7 @@
 ---
-- name: Create User - "{{ backup_username }}"
+- name: Create Users
   win_domain_user:
-    name: "{{ backup_username }}"
+    name: "{{ item }}"
     password: "{{ backup_user_password }}"
     state: present
     groups:
@@ -11,3 +11,4 @@
     domain_username: "{{domain_admin_user}}"
     domain_password: "{{domain_admin_password}}"
     domain_server: "{{DC_address}}"
+  loop: "{{ list_of_users }}"

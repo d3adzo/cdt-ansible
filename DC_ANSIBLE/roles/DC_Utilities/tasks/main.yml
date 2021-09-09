@@ -1,5 +1,0 @@
-- name: Install Essentials 
-  win_chocolatey:
-    name: 
-      - "{{ list_of_packages }}"
-    state: present

@@ -4,7 +4,10 @@ initial_domain_admin_password: "a1i3n_Emoj1#"
 
 domain_admin_user: "Administrator@area51.gov"
 domain_admin_password: "a1i3n_Emoj1#"
-DC_address: 10.1.1.1
+#DC_address: 10.1.1.10
+#DC_address: 10.1.2.10
+#DC_address: 192.168.0.59
+DC_address: 192.168.0.60
 DC_hostname: "DC"
 
 # Windows_AD_setup_vars
@@ -12,19 +15,23 @@ dc_domain_name: "area51.gov"
 domain_netbios_name: "area51" 
 safe_mode_password: "a1i3n_Emoj1#"
 
-# Windows_AD_User - Admin User 
-backup_username: "BAdmin"
+# Windows_AD_User - Admin User
+list_of_users: 
+  - "StevenHiller"
+  - "RussellCasse"
+  - "MattyRoberts"
+  - "Predator"
+  - "Xenomorph"
+  - "AgentK"
+  - "AgentJ"
+  - "FrankThePug"
+  - "Ripley"
+  - "ET"
+  - "Paul"
+  - "Thing"
 backup_user_password: "a1i3n_Emoj1#!"
 
 
 # windows_dns_client
 secondary_dns_server: 1.1.1.1
 
-
-#DC_Utilities list of packages to install on the DC
-# you can add as much as needed 
-list_of_packages:
-  - googlechrome
-  - firefox
-  - git
-  - notepadplusplus
