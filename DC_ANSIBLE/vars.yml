@@ -1,20 +1,20 @@
 # Windows_AD_generic
-initial_admin_password: "BadPassword123!"
-initial_domain_admin_password: "BadPassword123!"
+initial_admin_password: "a1i3n_Emoj1#"
+initial_domain_admin_password: "a1i3n_Emoj1#"
 
-domain_admin_user: "Administrator@mydomain.local"
-domain_admin_password: "BadPassword123!"
+domain_admin_user: "Administrator@area51.gov"
+domain_admin_password: "a1i3n_Emoj1#"
 DC_address: 10.1.1.1
 DC_hostname: "DC"
 
 # Windows_AD_setup_vars
-dc_domain_name: "mydomain.local"
-domain_netbios_name: "mydomain" 
-safe_mode_password: "BadPassword123!"
+dc_domain_name: "area51.gov"
+domain_netbios_name: "area51" 
+safe_mode_password: "a1i3n_Emoj1#"
 
 # Windows_AD_User - Admin User 
 backup_username: "BAdmin"
-backup_user_password: "BadPassword123!"
+backup_user_password: "a1i3n_Emoj1#!"
 
 
 # windows_dns_client
