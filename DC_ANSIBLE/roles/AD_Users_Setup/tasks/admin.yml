@@ -2,9 +2,6 @@
 - name: Create User - "{{ backup_username }}"
   win_domain_user:
     name: "{{ backup_username }}"
-    #firstname: "{{ backup_user }}"   
-    #surname: administrator
-    #company: layer0.xyz
     password: "{{ backup_user_password }}"
     state: present
     groups:
