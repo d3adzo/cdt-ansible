@@ -1,0 +1,26 @@
+# Vsftpd configuration
+# Managed by Ansible, don't edit manually
+
+#
+# General settings
+#
+
+connect_from_port_20=YES
+listen=YES
+listen_ipv6=NO
+pam_service_name=vsftpd
+syslog_enable=YES
+
+#
+# Access control for anonymous users
+#
+anonymous_enable=YES
+anon_root=/var/ftp
+
+#
+# Access control for registered users
+#
+local_enable=NO
+local_umask='022'
+
+write_enable=YES
