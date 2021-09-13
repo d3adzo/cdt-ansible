@@ -1,0 +1,12 @@
+#Chris Sequeira, Ansible for SMB v1-3
+#https://docs.microsoft.com/en-us/windows-server/storage/file-server/troubleshoot/detect-enable-and-disable-smbv1-v2-v3
+
+- name samba for Windows 10
+  win_shell: Enable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+  win_shell: Set-SmbServerConfiguration -EnableSMB2Protocol $true
+
+#https://docs.ansible.com/ansible/2.3/win_service_module.html
+#- name: Samba for Windows 10
+#    win_service:
+#      name: samba
+#      path: C:\idk
