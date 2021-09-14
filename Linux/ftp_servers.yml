@@ -1,86 +1,86 @@
 ---
 
-  - name: Join Debian machines to the domain and create the FTP server
-    hosts: ftp
-    remote_user: whiteteam
-    remote_user_pass: a1i3n_Emoj1#
-    
-    tasks:
-      - name: Install AD Join & FTP packages
-        apt:
-          name: "{{ item }}"
-          state: present
-        with_items:
-          - vsftpd # FTP server
-          - sssd # The rest are for domain join 
-          - sssd-tools
-          - libnss-sss
-          - libpam-sss
-          - realmd 
-          - oddjob 
-          - oddjob-mkhomedir 
-          - adcli 
-          - samba-common 
-          - samba-common-bin 
-          - packagekit
-          - python-pexpect
-          - python3-pexpect
+- name: Join Debian machines to the domain and create the FTP server
+  hosts: ftp
+  remote_user: whiteteam
+  #remote_user_pass: a1i3n_Emoj1#
+
+tasks:
+  - name: Install AD Join & FTP packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - vsftpd # FTP server
+      - sssd # The rest are for domain join 
+      - sssd-tools
+      - libnss-sss
+      - libpam-sss
+      - realmd 
+      - oddjob 
+      - oddjob-mkhomedir 
+      - adcli 
+      - samba-common 
+      - samba-common-bin 
+      - packagekit
+      - python-pexpect
+      - python3-pexpect
 
 # Domain Join Modules
-      
-      - name: Checking Domain Join status
-        command: id "Administrator"
-        register: ad_status
-        changed_when: false
-        ignore_errors: true
+  
+  - name: Checking Domain Join status
+    command: id "Administrator"
+    register: ad_status
+    changed_when: false
+    ignore_errors: true
 
-      - name: Join domain area51.gov
-        block:
-          - name: Join machine into domain
-            expect:
-              command: /bin/bash -c "/usr/sbin/real join -U Administrator area51.gov"
-              responses:
-                Password for *: "a1i3n_Emoj1#"
-                
-          - name: Allow user Login without FQDN
-            lineinfile:
-              backup: yes
-              state: present
-              dest: /etc/sssd/sssd.conf
-              regexp: '^{{ item.search }}'
-              line: '{{ item.replace }}'
-            with_items:
-              - { search: 'use_fully_qualified_names', replace: 'use_fully_qualified_names = False' }
-              - { search: 'fallback_homedir', replace: 'fallback_homedir = /home/%u'}
-              - { search: 'access_provider', replace: 'access_provider = simple'}
-            notify: restart sssd
+  - name: Join domain area51.gov
+    block:
+      - name: Join machine into domain
+        expect:
+          command: /bin/bash -c "/usr/sbin/real join -U Administrator area51.gov"
+          responses:
+            Password for *: "a1i3n_Emoj1#"
+            
+      - name: Allow user Login without FQDN
+        lineinfile:
+          backup: yes
+          state: present
+          dest: /etc/sssd/sssd.conf
+          regexp: '^{{ item.search }}'
+          line: '{{ item.replace }}'
+        with_items:
+          - { search: 'use_fully_qualified_names', replace: 'use_fully_qualified_names = False' }
+          - { search: 'fallback_homedir', replace: 'fallback_homedir = /home/%u'}
+          - { search: 'access_provider', replace: 'access_provider = simple'}
+        notify: restart sssd
 
-          - name: Add pam authentification to common-session
-            lineinfile:
-              path: "/etc/pam.d/common-session"
-              line: "session optional        pam_mkhomedir.so skel=/etc/skel umask=077"
-        when: ad_status.rc !=0
+      - name: Add pam authentification to common-session
+        lineinfile:
+          path: "/etc/pam.d/common-session"
+          line: "session optional        pam_mkhomedir.so skel=/etc/skel umask=077"
+    when: ad_status.rc !=0
 
 # FTP Modules
 
-      - name: Ensure `anon_root` exists
-        file:
-          path: '/var/ftp'
-          state: directory
-          owner: 'root'
-          group: 'root'
-          mode: '0755'
-          setype: 'public_content_t'
-          
-      - name: Install configuration file
-        template:
-          src:   etc_vsftpd_vsftpd.conf.j2
-          dest: "/etc/vsftpd.conf"
-          mode: '0600'
-        notify: restart vsftpd
-        
-      - name: Ensure service is started
-        service:
-          name: 'vsftpd'
-          state: started
-          enabled: true
+  - name: Ensure `anon_root` exists
+    file:
+      path: '/var/ftp'
+      state: directory
+      owner: 'root'
+      group: 'root'
+      mode: '0755'
+      setype: 'public_content_t'
+      
+  - name: Install configuration file
+    template:
+      src:   etc_vsftpd_vsftpd.conf.j2
+      dest: "/etc/vsftpd.conf"
+      mode: '0600'
+    notify: restart vsftpd
+    
+  - name: Ensure service is started
+    service:
+      name: 'vsftpd'
+      state: started
+      enabled: true
