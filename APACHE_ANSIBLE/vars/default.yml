@@ -1,0 +1,6 @@
+--
+app_user: "greyteam"
+#http_host: "
+#http_conf
+http_port: "80"
+disable_default: true
