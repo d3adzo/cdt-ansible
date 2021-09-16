@@ -4,7 +4,7 @@
 - name: samba for Windows 10
   win_shell: Enable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
   win_shell: Set-SmbServerConfiguration -EnableSMB2Protocol $true
-  win_shell: New-SMBShare -Name "fmulderShare" -Path "C:\fmulderShare"
+  win_shell: New-SMBShare -Name "fmulderShare" -Path "C:\"
   win_shell: Grant-SmbShareAccess -Name "fmulderShare" -AccountName Everyone -AccessRight Full
 
 #https://docs.ansible.com/ansible/2.3/win_service_module.html
